@@ -10,13 +10,12 @@ import Foundation
 import UIKit
 
 extension UILabel {
+    
     func setHTMLFromString(text: String) {
+        
         do {
             let modifiedFont = NSString(format:"<span style=\"font-family: \(self.font!.fontName); font-size: \(self.font!.pointSize)\">%@</span>" as NSString, text) as String
-            let attrStr = try NSAttributedString(data: modifiedFont.data(using: String.Encoding.unicode)!,
-                                                 options: [.documentType: NSAttributedString.DocumentType.html,
-                                                           .characterEncoding: String.Encoding.utf8.rawValue],
-                                                 documentAttributes: nil)
+            let attrStr = try NSAttributedString(data: modifiedFont.data(using: String.Encoding.unicode)!, options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.plain], documentAttributes: nil)
             self.attributedText = attrStr
         }
         catch {
@@ -25,19 +24,3 @@ extension UILabel {
         }
     }
 }
-
-extension String {
-    var html2AttributedString: NSAttributedString? {
-        do {
-            return try NSAttributedString(data: Data(utf8),options: [.documentType: NSAttributedString.DocumentType.html,
-                                                    .characterEncoding: String.Encoding.utf8.rawValue],documentAttributes: nil)
-        } catch {
-            print("error:", error)
-            return  nil
-        }
-    }
-    var html2String: String {
-        return html2AttributedString?.string ?? ""
-    }
-}
-

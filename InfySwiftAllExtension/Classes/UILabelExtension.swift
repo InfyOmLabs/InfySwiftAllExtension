@@ -49,7 +49,7 @@ extension UILabel {
         self.lineBreakMode = .byWordWrapping
         let myFont:CTFont = CTFontCreateWithName((font.fontName as CFString?)!, font.pointSize, nil)
         let attStr:NSMutableAttributedString = NSMutableAttributedString(string: text as String)
-        attStr.addAttribute(NSAttributedStringKey(rawValue: String(kCTFontAttributeName)), value:myFont, range: NSMakeRange(0, attStr.length))
+        attStr.addAttribute(NSAttributedString.Key(rawValue: String(kCTFontAttributeName)), value:myFont, range: NSMakeRange(0, attStr.length))
         let frameSetter:CTFramesetter = CTFramesetterCreateWithAttributedString(attStr as CFAttributedString)
         let path:CGMutablePath = CGMutablePath()
         path.addRect(CGRect(x: 0, y: 0, width: getScreenWidth() - 30 , height: 100000))
@@ -85,14 +85,14 @@ extension UILabel {
     func setTextColor(color: UIColor, range: NSRange?) {
         guard let range = range else { return }
         let text = mutableAttributedString()
-        text.addAttribute(NSAttributedStringKey.foregroundColor, value: color, range: range)
+        text.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
         attributedText = text
     }
     
     func setFont(font: UIFont, range: NSRange?) {
         guard let range = range else { return }
         let text = mutableAttributedString()
-        text.addAttribute(NSAttributedStringKey.font, value: font, range: range)
+        text.addAttribute(NSAttributedString.Key.font, value: font, range: range)
         attributedText = text
     }
     
@@ -105,10 +105,10 @@ extension UILabel {
     func setTextUnderline(color: UIColor, range: NSRange?, byWord: Bool) {
         guard let range = range else { return }
         let text = mutableAttributedString()
-        var style = NSUnderlineStyle.styleSingle.rawValue
+        var style = NSUnderlineStyle.single.rawValue
         if byWord { style = style | NSUnderlineStyle.byWord.rawValue }
-        text.addAttribute(NSAttributedStringKey.underlineStyle, value: NSNumber(value: style as Int), range: range)
-        text.addAttribute(NSAttributedStringKey.underlineColor, value: color, range: range)
+        text.addAttribute(NSAttributedString.Key.underlineStyle, value: NSNumber(value: style as Int), range: range)
+        text.addAttribute(NSAttributedString.Key.underlineColor, value: color, range: range)
         attributedText = text
     }
     
@@ -116,7 +116,7 @@ extension UILabel {
     func setTextWithoutUnderline(range: NSRange?) {
         guard let range = range else { return }
         let text = mutableAttributedString()
-        text.removeAttribute(NSAttributedStringKey.underlineStyle, range: range)
+        text.removeAttribute(NSAttributedString.Key.underlineStyle, range: range)
         attributedText = text
     }
     
@@ -349,8 +349,13 @@ extension UILabel {
         paragraphStyle.alignment = self.textAlignment
         
         let attrString = NSMutableAttributedString(string: self.text!)
-        attrString.addAttribute(NSAttributedStringKey.font, value: self.font, range: NSMakeRange(0, attrString.length))
-        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSAttributedString.Key.font, value: self.font, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         self.attributedText = attrString
     }
+
+
+
+    
+
 }
